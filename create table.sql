@@ -50,4 +50,53 @@ CREATE TABLE jadwal (
     FOREIGN KEY (stasiun_tujuan) REFERENCES stasiun(id_stasiun)
 );
 
+CREATE TABLE data_petugas (
+    id_petugas INT PRIMARY KEY,
+    nama_petugas VARCHAR(100)
+);
 
+CREATE TABLE data_penumpang(
+	id_penumpang INT PRIMARY KEY,
+  	nama_penumpang VARCHAR(100),
+ 	jenis_kelamin VARCHAR(10),
+ 	usia INT
+);
+
+CREATE TABLE data_tiket (
+    id_tiket INT PRIMARY KEY,
+    id_penumpang INT,
+    id_gerbong INT,
+    id_kursi INT,
+    id_jadwal INT,
+    harga_tiket DECIMAL(10,2)
+
+	FOREIGN KEY (id_penumpang) REFERENCES data_penumpang(id_penumpang),
+	FOREIGN KEY (id_gerbong) REFERENCES gerbong(id_gerbong),
+	FOREIGN KEY (id_kursi) REFERENCES kursi(id_kursi),
+	FOREIGN KEY (id_jadwal) REFERENCES jadwal(id_jadwal)
+);
+
+CREATE TABLE data_transaksi (
+    id_transaksi INT PRIMARY KEY,
+    id_pemesan INT,
+    id_tiket INT,
+    id_petugas INT,
+    id_penumpang INT,
+    waktu_pemesanan DATETIME,
+    status_transaksi VARCHAR(50),
+	FOREIGN KEY (id_pemesan) REFERENCES data_pemesan(id_pemesan),	
+    	FOREIGN KEY (id_tiket) REFERENCES data_tiket(id_tiket),
+    	FOREIGN KEY (id_petugas) REFERENCES data_petugas(id_petugas),
+	FOREIGN KEY (id_penumpang) REFERENCES data_penumpang(id_penumpang)
+    
+);
+
+CREATE TABLE data_pemberhentian (
+    id_stasiun INT NOT NULL,
+    id_jadwal INT NOT NULL,
+    jenis_pemberhentian VARCHAR(50),
+    urutan_pemberhentian INT,
+    PRIMARY KEY (id_stasiun, id_jadwal),
+    FOREIGN KEY (id_stasiun) REFERENCES stasiun(id_stasiun),
+    FOREIGN KEY (id_jadwal) REFERENCES jadwal(id_jadwal)
+);
