@@ -68,7 +68,7 @@ CREATE TABLE data_tiket (
     id_gerbong INT,
     id_kursi INT,
     id_jadwal INT,
-    harga_tiket DECIMAL(10,2)
+    harga_tiket DECIMAL(10,2),
 
 	FOREIGN KEY (id_penumpang) REFERENCES data_penumpang(id_penumpang),
 	FOREIGN KEY (id_gerbong) REFERENCES gerbong(id_gerbong),
